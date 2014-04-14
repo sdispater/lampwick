@@ -59,10 +59,22 @@ class Movie(object):
         if m:
             self.rotation = int(m.group(1))
 
-        m = re.search('Video: (.*)', output)
         matches = re.findall('Video: (.*)', output)
         if matches:
-            self.video_stream = m.group(1)
+            if len(matches) == 1:
+                self.video_stream = matches[0]
+            else:
+                # Multiple video streams found, figuring out the right one
+                for m in matches:
+                    video_codec = re.match('((?:\([^()]*\)|[^,])+)', m).group(1)
+                    # The first video stream in some mp4 files
+                    # (like iTunes one) have a png file as
+                    # first video stream, so we ignore it
+                    if video_codec == 'png':
+                        continue
+
+                    self.video_stream = m
+                    break
 
         m = re.search('Audio: (.*)', output)
         if m:
