@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-__version__ = '0.1.0'
+__version__ = '0.1'
 
 setup(
     name='lampwick',
@@ -11,7 +11,8 @@ setup(
     description='Simple wrappper around ffmpeg commands.',
     author='Sébastien Eustace',
     author_email='sebastien.eustace@gmail.com',
-    url='https://github.com/SDisPater/lampwick',
+    url='https://github.com/sdispater/lampwick',
+    download_url='https://github.com/sdispater/lampwick/archive/0.1.tar.gz',
     packages=find_packages(),
     install_requires=['nose'],
     tests_require=['nose'],
