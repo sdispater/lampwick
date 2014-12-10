@@ -2,7 +2,7 @@
 
 from setuptools import setup, find_packages
 
-__version__ = '0.1'
+__version__ = '0.1.1'
 
 setup(
     name='lampwick',
@@ -12,7 +12,7 @@ setup(
     author='Sébastien Eustace',
     author_email='sebastien.eustace@gmail.com',
     url='https://github.com/sdispater/lampwick',
-    download_url='https://github.com/sdispater/lampwick/archive/0.1.tar.gz',
+    download_url='https://github.com/sdispater/lampwick/archive/%s.tar.gz' % __version__,
     packages=find_packages(),
     install_requires=['nose', 'pexpect', 'dateutils'],
     tests_require=['nose'],
