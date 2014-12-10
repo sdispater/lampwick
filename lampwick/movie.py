@@ -7,6 +7,8 @@ import errno
 import dateutil.parser as date_parser
 
 from . import BINARY
+from .encoding_options import EncodingOptions
+from .transcoder import Transcoder
 
 
 class Movie(object):
@@ -127,6 +129,12 @@ class Movie(object):
                 or 'is not supported' in output\
                 or 'could not find codec parameters' in output:
             self.invalid = True
+
+    def transcode(self, output_file, options=EncodingOptions(), transcoder_options=None):
+        transcoder = Transcoder(self, output_file, options, transcoder_options)
+
+        for progress in transcoder.run():
+            yield progress
 
     @property
     def audio_channels(self):
