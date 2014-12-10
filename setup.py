@@ -14,7 +14,7 @@ setup(
     url='https://github.com/sdispater/lampwick',
     download_url='https://github.com/sdispater/lampwick/archive/0.1.tar.gz',
     packages=find_packages(),
-    install_requires=['nose'],
+    install_requires=['nose', 'pexpect', 'dateutils'],
     tests_require=['nose'],
     test_suite='nose.collector',
     classifiers=[
