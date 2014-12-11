@@ -15,6 +15,9 @@ class EncodingOptions(object):
         return hasattr(self, '_convert_%s' % option)\
             and callable(getattr(self, '_convert_%s' % option))
 
+    def update(self, options):
+        self._options.update(options)
+
     def __str__(self):
         params = []
         for option, value in self._options.iteritems():
@@ -147,10 +150,13 @@ class EncodingOptions(object):
         return ['-ss', value]
 
     def _convert_screenshot(self, value):
-        if value:
-            return ['-vframes', '1', '-f', 'image2']
+        if not value:
+            return []
 
-        return []
+        if isinstance(value, int):
+            return ['-vf', 'fps=fps=1/%d' % value]
+        else:
+            return ['-vframes', '1', '-f', 'image2']
 
     def _convert_x264_profile(self, value):
         return ['-vprofile', value]
@@ -169,6 +175,12 @@ class EncodingOptions(object):
             return value
 
         return '%sk' % value
+
+    def get(self, item, default=None):
+        return self._options.get(item, default)
+
+    def pop(self, item, default=None):
+        return self._options.pop(item, default)
 
     def __getitem__(self, item):
         return self._options.get(item)

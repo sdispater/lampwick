@@ -136,6 +136,16 @@ class Movie(object):
         for progress in transcoder.run():
             yield progress
 
+    def screenshot(self, output_file, options=EncodingOptions(), transcoder_options=None):
+        options.update({
+            'screenshot': options.pop('every', True)
+        })
+
+        transcoder = Transcoder(self, output_file, options, transcoder_options)
+
+        for progress in transcoder.run():
+            yield progress
+
     @property
     def audio_channels(self):
         if not self._audio_channels:
