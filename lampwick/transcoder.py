@@ -82,7 +82,7 @@ class Transcoder(object):
         thread = pexpect.spawn(subprocess.list2cmdline(command))
         cpl = thread.compile_pattern_list([
             pexpect.EOF,
-            "time=(\d+):(\d+):(\d+.\d+)"
+            "time=((\d+):(\d+):)?(\d+.\d+)"
         ])
 
         while True:
@@ -93,7 +93,10 @@ class Transcoder(object):
             elif i == 1:
                 m = thread.match
 
-                time = int(m.group(1)) * 3600 + int(m.group(2)) * 60 + float(m.group(3))
+                if m.group(1):
+                    time = int(m.group(2)) * 3600 + int(m.group(3)) * 60 + float(m.group(4))
+                else:
+                    time = float(m.group(4))
 
                 progress = time / self.movie.duration
 
